@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public class MainListActivity extends AppCompatActivity {
     List<Data> dataList;
     List<Integer> uniqueIdList;
     RecyclerView rvMainList;
+    Map<Integer, List<String>> map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class MainListActivity extends AppCompatActivity {
         rvMainList = findViewById(R.id.rvMainList);
         dataList = new ArrayList<>();
         uniqueIdList = new ArrayList<>();
+        map = new HashMap<>();
 
         //create adapter
         final DataAdapter dataAdapter = new DataAdapter(this, dataList, uniqueIdList);
@@ -52,7 +55,7 @@ public class MainListActivity extends AppCompatActivity {
         //set a Layout Manager on the recycler view
         rvMainList.setLayoutManager(new LinearLayoutManager(this));
 
-        //AsyncHttpClient Network call to fetch movie data
+        //AsyncHttpClient Network call to fetch data
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         asyncHttpClient.get(JSON_DATA_URL, new JsonHttpResponseHandler() {
             @Override
@@ -62,7 +65,7 @@ public class MainListActivity extends AppCompatActivity {
 //                    Log.i(TAG, "Json Data: " + jsonArray.toString());
 //                    Log.i(TAG, "Json List Count: " + dataList.size());
                     dataList = Data.fromJsonArray(jsonArray);
-                    Map<Integer, List<String>> map = Data.getMap(dataList);
+                    map = Data.getMap(dataList);
 
                     for (Map.Entry<Integer, List<String>> entry : map.entrySet()) {
                         Integer keyListId = entry.getKey();
@@ -70,10 +73,6 @@ public class MainListActivity extends AppCompatActivity {
                         uniqueIdList.add(keyListId);
                         Log.i(TAG, "ListID: " + keyListId + " names: " + nameValues.toString());
                     }
-
-
-//                    dataList.addAll(Data.fromJsonArray(jsonArray));
-
 
                     dataAdapter.notifyDataSetChanged();
 
