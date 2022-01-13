@@ -1,29 +1,25 @@
 package com.roysten.fetch_rewards_assignment.models;
 
+import com.roysten.fetch_rewards_assignment.comparator.AlphanumericSortComparator;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.parceler.Parcel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Parcel
 public class Data {
+    private static List<Data> dataList;
+    private static Map<Integer, List<String>> map;
     private int id;
     private int listId;
     private String name;
 
-    private static List<Data> dataList;
-    private static Map<Integer, List<String>> map;
-
-
-    // empty constructor needed by the Parceler library
-    public Data() {
-
-    }
 
     public Data(JSONObject jsonObject) throws JSONException {
         id = jsonObject.getInt("id");
@@ -46,12 +42,12 @@ public class Data {
     }
 
     public static Map<Integer, List<String>> getMap(List<Data> dataList) {
-        if(Data.dataList != null)
+        if (Data.dataList != null)
             dataList = Data.dataList;
 
         map = new HashMap<>();
 
-        for(int i = 0; i < dataList.size(); i++) {
+        for (int i = 0; i < dataList.size(); i++) {
             int listIdKey = dataList.get(i).getListId();
             String nameValue = dataList.get(i).getName();
 
@@ -59,6 +55,13 @@ public class Data {
                 map.putIfAbsent(listIdKey, new ArrayList<>());
             }
             map.get(listIdKey).add(nameValue);
+        }
+
+
+        Comparator<String> comp = AlphanumericSortComparator.NUMERICAL_ORDER;
+
+        for (Integer i : map.keySet()) {
+            Collections.sort(map.get(i), comp);
         }
 
         return map;

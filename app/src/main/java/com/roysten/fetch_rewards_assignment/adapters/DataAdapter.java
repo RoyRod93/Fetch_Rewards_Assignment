@@ -21,8 +21,6 @@ import java.util.Map;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
-//    public static final String TAG = "DataAdapter";
-
     Context context;
     List<Data> dataList;
     List<Integer> uniqueIdList;
@@ -44,7 +42,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DataAdapter.ViewHolder holder, int position) {
-//        Data data = dataList.get(position);
         clickId = uniqueIdList.get(position);
         holder.bind(clickId);
 
@@ -71,7 +68,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
             Integer key = listId;
             map = Data.getMap(dataList);
             ArrayList<String> namesList = (ArrayList<String>) map.get(key);
-//            Parcelable namesListParcelable = Parcels.wrap(namesList);
 
             listIdContainer.setOnClickListener(v -> {
                 Intent intent = new Intent(context, NamesListActivity.class);

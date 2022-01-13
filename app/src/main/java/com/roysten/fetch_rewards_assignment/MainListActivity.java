@@ -38,7 +38,6 @@ public class MainListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setLogo(R.drawable.ic_launcher_background);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         rvMainList = findViewById(R.id.rvMainList);

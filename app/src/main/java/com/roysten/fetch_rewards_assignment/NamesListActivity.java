@@ -1,7 +1,6 @@
 package com.roysten.fetch_rewards_assignment;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +25,7 @@ public class NamesListActivity extends AppCompatActivity {
         rvNamesList = findViewById(R.id.rvNamesList);
 
         final List<String> namesList = getIntent().getStringArrayListExtra("namesList");
-        Log.i(TAG, " names: " + namesList.toString());
+//        Log.i(TAG, " names: " + namesList.toString());
 
         final NamesAdapter namesAdapter = new NamesAdapter(this, namesList);
         rvNamesList.setAdapter(namesAdapter);
